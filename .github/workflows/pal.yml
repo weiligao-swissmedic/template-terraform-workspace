@@ -1,0 +1,25 @@
+name: PAL Workflow
+
+concurrency:
+  group: "${{ github.ref }}/pal"
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/pal.yml"
+
+permissions:
+  contents: read
+  packages: read
+  id-token: write
+
+jobs:
+  call-set-pal:
+    uses: smc-workflow/pal-workflow/.github/workflows/pal.yml@v1
+    with:
+      PARTNER_ID: 4789345
+      ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}

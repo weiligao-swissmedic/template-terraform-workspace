@@ -1,0 +1,40 @@
+name: Terraform Workflow
+
+concurrency:
+  group: "${{ github.ref }}/terraform"
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - ".github/workflows/pal.yml"
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - ".github/workflows/pal.yml"
+
+permissions:
+  contents: write
+  packages: read
+  id-token: write
+  issues: write # read/write to repo issues
+  statuses: write
+  pull-requests: write
+
+jobs:
+  call-terrraform:
+    permissions:
+      contents: write
+      packages: read
+      id-token: write
+      issues: write # read/write to repo issues
+      statuses: write
+      pull-requests: write
+    uses: "smc-workflow/terraform-workflows/.github/workflows/terraform-workspace.yml@v4"
+    with:
+      CONTAINER_IMAGE: ghcr.io/smc-devcontainer/azure-terraform/devcon:0.1.1
+    secrets:
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN_app_terraform_io }}
