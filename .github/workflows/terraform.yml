@@ -36,5 +36,4 @@ jobs:
     uses: "smc-workflow/terraform-workflows/.github/workflows/terraform-workspace.yml@v4"
     with:
       CONTAINER_IMAGE: ghcr.io/smc-devcontainer/azure-terraform/devcon:0.1.1
-    secrets:
-      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN_app_terraform_io }}
+    secrets: inherit
